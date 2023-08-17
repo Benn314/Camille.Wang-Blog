@@ -7,9 +7,33 @@ import ArchivePostList from "../layouts/ArchivePostList.astro";
   <section class="archive">
     <div class="section-content section-tag">
       <div class="archive-tag">
-        <h2 class="tag-header">404 Not Found</h2>
+        <div class="tag-header" style="margin: 20px">404 Not Found</div>
         <div class="tag-post-list">来到了一片荒原，这里什么都没有。</div>
       </div>
     </div>
   </section>
 </BaseLayout>
+
+<style>
+  /* 初始状态 */
+.archive-tag{
+  text-align: center;
+  margin-bottom: 35px;
+  font-size: 28px;
+  font-weight: 500; /* 加粗字体 */
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>

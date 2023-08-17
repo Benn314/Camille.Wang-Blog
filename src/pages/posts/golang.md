@@ -1,7 +1,7 @@
 ---
 layout: '../../layouts/MarkdownPost.astro'
 title: 'Golang net/http & HTTP Serve 源码分析'
-pubDate: 2035-06-01
+pubDate: 2023-08-16
 description: '很多Go web框架都通过封装 net/http 来实现核心功能，因此学习 net/http 是研究 Gin等框架的基础。'
 author: 'Austin'
 cover:
@@ -12,7 +12,6 @@ tags: ["源码研究", "标准库", "golang", "gin"]
 theme: 'light'
 featured: false
 ---
-
 ![Go HTTP Server的大致处理流程|wide](https://pic.lookcos.cn/i/usr/uploads/2023/02/3697706570.png)
 
 服务器在收到请求时，首先进入路由 Router，接着路由会根据 request 请求的路径，找到对应的处理器(Handler)，处理器再根据 request 进行处理并构造 response 进行返回。
@@ -59,7 +58,7 @@ mac:~ $ curl 127.0.0.1:8080/v2
 Hello, net/http! v2
 ```
 
-这段代码我们用 http.Handle 和 http.HandleFunc 两种方法分别在路径 /v1 和 /v2 上注册了两个 http.Handler。注意：Handle 和 Handler 是两个东西。  
+这段代码我们用 http.Handle 和 http.HandleFunc 两种方法分别在路径 /v1 和 /v2 上注册了两个 http.Handler。注意：Handle 和 Handler 是两个东西。
 这两个 Handler 都对 request 进行了处理，并且通过 fmt.Fprintf 方法写入并返回数据。
 
 ## 处理器
@@ -168,7 +167,7 @@ func ListenAndServe(addr string, handler Handler) error {
 }
 ```
 
-不难看出，http.ListenAndServe 负责监听 TCP 网络地址 addr, 代码中写的是`:8080` 也即是监听 8080 端口，并且处理相关的请求。
+不难看出，http.ListenAndServe 负责监听 TCP 网络地址 addr, 代码中写的是 `:8080` 也即是监听 8080 端口，并且处理相关的请求。
 
 这里传入的第二个参数是 Handler 类型，根据注释可以看出：如果传入值为 nil ，那么将会使用 DefaultServeMux 。
 
@@ -443,11 +442,11 @@ func (sh serverHandler) ServeHTTP(rw ResponseWriter, req *Request) {
 
 ### 总结
 
-Go net/http 标准库，能让我们轻易地写出一个高性能的 HTTP Server，但肯定不能满足实际业务开发，比如动态路由、中间件、鉴权等这是标准库所不具有的。  
+Go net/http 标准库，能让我们轻易地写出一个高性能的 HTTP Server，但肯定不能满足实际业务开发，比如动态路由、中间件、鉴权等这是标准库所不具有的。
 
-很多重复性的工作和常用的工具与特性要由框架来封装和实现，go 很多高性能框架 比如 Gin 都是直接封装了 net/http，这一点难能可贵，由此可见 Go 标准库的价值。  
+很多重复性的工作和常用的工具与特性要由框架来封装和实现，go 很多高性能框架 比如 Gin 都是直接封装了 net/http，这一点难能可贵，由此可见 Go 标准库的价值。
 
-所以学习优秀 Go web 框架的前提就是弄清楚 net/http Server 部分的源码，同时，也能方便更好的去使用和优化框架。  
-本文所使用的源码均来自 go 1.18.3，部分方法说明翻译自官方注释。  
+所以学习优秀 Go web 框架的前提就是弄清楚 net/http Server 部分的源码，同时，也能方便更好的去使用和优化框架。
+本文所使用的源码均来自 go 1.18.3，部分方法说明翻译自官方注释。
 
 如有不当之处，请批评指出。

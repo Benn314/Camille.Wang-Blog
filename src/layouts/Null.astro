@@ -1,0 +1,17 @@
+---
+import BaseHead1 from "../components/nullBaseHead.astro";
+import Header from "../components/Header.astro";
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_LANG} from "../consts";
+const { primaryTitle } = Astro.props;
+const title = primaryTitle ? `${primaryTitle}  -  ${SITE_TITLE}`  : SITE_TITLE;
+---
+
+<html lang={SITE_LANG} dir="ltr">
+  <head>
+    <BaseHead1 title={title} description={SITE_DESCRIPTION} />
+  </head>
+  <body class="page-landing">
+    <Header />
+    <slot />
+  </body>
+</html>

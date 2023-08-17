@@ -1,7 +1,7 @@
 ---
 layout: '../../layouts/MarkdownPost.astro'
 title: 'Apple 推出新款 HomePod，带来突破性音质与智能体验'
-pubDate: 2035-03-25
+pubDate: 2023-08-17
 description: '呈现出类拔萃的音质、增强的 Siri 功能以及安全放心的智能家居体验'
 author: 'Apple Newsroom'
 cover:
@@ -20,7 +20,6 @@ meta:
 
 keywords: key1, key2, key3
 ---
-
 ![HomePod 汇集了多项 Apple 创新技术、Siri 智能和智能家居功能，为用户带来前所未有的聆听体验。](https://www.apple.com.cn/newsroom/images/product/homepod/standard/Apple-HomePod-hero-230118_big.jpg.large_2x.jpg)
 
 加利福尼亚州，库比提诺Apple 今日宣布推出 HomePod（第二代）。这款功能强大的智能扬声器采用优美的标志性设计，为用户带来新一代声学体验。HomePod 汇集了多项 Apple 创新技术与 Siri 智能，提供先进计算音频技术，支持播放沉浸式空间音频曲目，呈现前所未有的聆听体验。HomePod 带来管理日常任务、控制智能家居的便利新方式，用户可以使用 Siri 创建智能家居自动化功能，在家中触发烟雾或一氧化碳警报时获得通知，或者查看房间的温度与湿度——以上操作不必动手就能完成。
@@ -58,7 +57,7 @@ HomePod 的“查找”功能可以让遗落的设备播放声音，帮用户定
 
 ![房间中的任何人都可以拿着 iPhone 靠近 HomePod，播放建议会自动出现在 iPhone 屏幕上，从而轻松控制音频播放或获取个性化歌曲与播客推荐。](https://www.apple.com.cn/newsroom/images/product/homepod/standard/Apple-HomePod-ecosystem-230118_big.jpg.large_2x.jpg)
 
-## 智能家居必备 
+## 智能家居必备
 
 依托声音识别功能5，HomePod 可以听到烟雾或一氧化碳警报声，识别出此类声音后，直接向用户的 iPhone 发送通知。全新的内置温度和湿度感应器可衡量室内环境，让用户设置自动化操作，例如房间内到达一定温度时关上窗帘，或者打开风扇。
 

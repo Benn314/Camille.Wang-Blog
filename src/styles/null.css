@@ -314,10 +314,18 @@ header{
   top: 0;
   left: 0;
   width: 100%;
+  /* margin-top: -240px; */
+  margin-top: -19.5%;
   min-width: 1024px;
   z-index: 9997;
   height: 3.05882rem;
   backdrop-filter: saturate(180%) blur(20px);
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.375);
+  box-shadow: 0 0.75rem 2rem 0 rgba(0,0,0,0.1);
+  border-radius: 40px;
+  border: 1px solid rgba(255,255,255,0.125);
 }
 
 .nav::after{
@@ -327,7 +335,7 @@ header{
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(255,255,255,0.7);
+  /* background: rgba(255,255,255,0.7); */
 }
 
 .theme-dark .nav::after {
@@ -7301,9 +7309,9 @@ html.no-touch.no-reduced-motion .tile.tile-list[data-focus-method=key] .media--v
 }
 
 section.archive {
-  min-height: 78vh;
+  /* min-height: 78vh;
   background-color: #f2f2f2;
-  margin-top: 0;
+  margin-top: 0; */
 }
 
 .section-tag {
