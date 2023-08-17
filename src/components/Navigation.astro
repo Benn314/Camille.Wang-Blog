@@ -13,16 +13,94 @@ import { SITE_TITLE } from "../consts";
             <a href="/archive" class="nav-item-content">目录</a>
           </div>
           <div class="nav-item-wrapper">
-            <a href="/about" class="nav-item-content">关于我</a>
+            <a href="/Gallery" class="nav-item-content">作品集</a>
+            <div class="dropdown">
+              <button class="dropdown-toggle">选择一个页面</button>
+              <ul class="dropdown-menu">
+                <li><a href="/Gallery/home">首页</a></li>
+                <li><a href="/Gallery/about">关于我们</a></li>
+                <li><a href="/Gallery/contact">联系我们</a></li>
+                <li><a href="/Gallery/Aurora">极光</a></li>
+                <li><a href="/Gallery/rain">下雨特效</a></li>
+              </ul>
+            </div>
           </div>
           <div class="nav-item-wrapper">
-            <a href="/about1" class="nav-item-content">关于我</a>
+            <a href="/about" class="nav-item-content">关于我</a>
           </div>
-          <!-- <div class="nav-item-wrapper">
-            <a href="/rss.xml" class="nav-item-content" target="_blank">RSS</a>
-          </div> -->
         </div>
       </div>
     </div>
   </div>
 </nav>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const dropdown = document.querySelector(".dropdown");
+  const dropdownToggle = document.querySelector(".dropdown-toggle");
+  const dropdownMenu = document.querySelector(".dropdown-menu");
+
+  dropdownToggle.addEventListener("click", function () {
+    dropdownMenu.classList.toggle("show");
+  });
+
+  dropdown.addEventListener("mouseleave", function () {
+    dropdownMenu.classList.remove("show");
+  });
+
+  const dropdownLinks = dropdownMenu.querySelectorAll("a");
+  dropdownLinks.forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      const href = this.getAttribute("href");
+      window.location.href = href;
+    });
+  });
+});
+
+</script>
+
+<style>
+  .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  padding: 8px 15px;
+}
+
+.dropdown-menu li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+}
+
+.dropdown-menu li a:hover {
+  background-color: #f0f0f0;
+}
+
+</style>

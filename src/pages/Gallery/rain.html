@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>给笨蛋美女！💜</title>
+    <link
+      rel="shortcut icon"
+      href="https://pic.imgdb.cn/item/6422ecbaa682492fcc01576f.png"
+      type="image/x-icon"
+    />
+    <!-- https://pic.imgdb.cn/item/6422ecbaa682492fcc01576f.png -->
+    <!-- https://p.qlogo.cn/hy_personal/3e28f14aa051684283b2bea75ca88a3d4f242b92e7f6986f5e36effe02590dfd/0.png -->
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .content {
+      /* width: 100vw;
+        height: 100vh;
+        background: url(https://p.qlogo.cn/hy_personal/3e28f14aa051684283b2bea75ca88a3d30eaed45ec654b2393540135f9b8f5ea/0.jpg) center no-repeat; */
+      /* background: url(puple_flower.jpg); */
+      /* background-size: cover; */
+      /* background-color: yellowgreen; */
+      text-align: center;
+    }
+    img {
+      width: auto;
+      height: 100vh;
+      /* z-index: 1; */
+      /* text-decoration: none; */
+    }
+    #rainBox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      /* 不阻挡其他元素事件触发 */
+      pointer-events: none;
+    }
+    .rain {
+      position: absolute;
+      width: 2px;
+      height: 50px;
+      background: linear-gradient(
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.6)
+      );
+    }
+    body {
+      overflow: hidden;
+    }
+  </style>
+
+  <body>
+    <audio
+      id="music"
+      src="http://music.163.com/song/media/outer/url?id=494858498.mp3"
+      autoplay
+    ></audio>
+    <div id="rainBox"></div>
+    <div class="content">
+      <img
+        src="/static/img/puple_flower.jpg"
+        alt="花"
+      />
+    </div>
+    <script>
+      const box = document.getElementById("rainBox");
+      let boxHeight = box.clientHeight;
+      let boxWidth = box.clientWidth;
+      // 页面大小发生变化时，改变盒子大小
+      window.onresize = function () {
+        boxHeight = box.clientHeight;
+        boxWidth = box.clientWidth;
+      };
+      // 每隔一段时间,添加雨滴
+      setInterval(() => {
+        const rain = document.createElement("div");
+        rain.classList.add("rain");
+        rain.style.top = 0;
+        // 随机刷新雨点位置
+        rain.style.left = Math.random() * boxWidth + "px";
+        // 随机雨点透明度
+        rain.style.opacity = Math.random();
+        box.appendChild(rain);
+        // 每隔一段时间,雨水下落
+        let race = 1;
+        const timer = setInterval(() => {
+          if (parseInt(rain.style.top) > boxHeight) {
+            clearInterval(timer);
+            box.removeChild(rain);
+          }
+          race++;
+          rain.style.top = parseInt(rain.style.top) + race + "px";
+        }, 20);
+      }, 50);
+
+      window.onload = function () {
+        setInterval("toggleSound()", 1);
+      };
+
+      function toggleSound() {
+        var music = document.getElementById("music"); //获取ID
+        if (music.paused) {
+          //判读是否播放
+          music.paused = false;
+          music.play(); //没有就播放
+        }
+      }
+
+      // img.onclick=function(){ return false; } // return false 可以屏蔽默认事件
+    </script>
+  </body>
+</html>
