@@ -13,9 +13,10 @@ import { SITE_TITLE } from "../consts";
             <a href="/archive" class="nav-item-content">目录</a>
           </div>
           <div class="nav-item-wrapper">
-            <a href="/Gallery" class="nav-item-content">作品集</a>
             <div class="dropdown">
-              <button class="dropdown-toggle">选择一个页面</button>
+              <a href="/Gallery">
+                <button class="nav-item-content dropdown-toggle">作品集👇</button>
+              </a>
               <ul class="dropdown-menu">
                 <li><a href="/Gallery/home">首页</a></li>
                 <li><a href="/Gallery/about">关于我们</a></li>
@@ -67,9 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 
 .dropdown-toggle {
-  background-color: #f0f0f0;
   border: none;
-  padding: 10px 20px;
   cursor: pointer;
 }
 
