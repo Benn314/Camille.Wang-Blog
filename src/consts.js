@@ -1,8 +1,8 @@
 export const SITE_TITLE = `Camille's Blog`;
 export const SITE_DESCRIPTION = 'Site Description';
 export const SITE_EMAIL = 'ben43@foxmail.com'
-export const SITE_NAME = 'camille.com';
-export const SITE_URL = "https://camille.com";
+export const SITE_NAME = 'camille.plus';
+export const SITE_URL = "https://camille.plus";
 export const SITE_LANG = "zh-CN";
 
 // Author, used only when author is not specified on the page, 
