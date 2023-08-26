@@ -16,6 +16,9 @@ import { SITE_TITLE } from "../consts";
             <a href="/archive" class="nav-item-content">目录</a>
           </div>
           <div class="nav-item-wrapper">
+            <a href="/guestbook" class="nav-item-content">留言板</a>
+          </div>
+          <div class="nav-item-wrapper">
             <div class="dropdown">
               <a href="/Gallery">
                 <button class="nav-item-content dropdown-toggle">作品集👇</button>
@@ -96,6 +99,16 @@ document.addEventListener("DOMContentLoaded", function () {
   margin: 0;
   background-color: #fff;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+  overflow: hidden; /* Add this line */
+  max-height: 175px; /* Add this line */
+  transition: max-height 2s ease; /* Add this line */
+}
+
+.dropdown-menu:hover {
+  max-height: 1000px; /* Adjust the value to your needs */
+  display: block; /* Show the menu on hover */
+  opacity: 1;
 }
 
 .dropdown:hover .dropdown-menu {

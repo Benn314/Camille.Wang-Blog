@@ -1,13 +1,19 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ArchivePostList from "../layouts/ArchivePostList.astro";
 ---
 
 <BaseLayout primaryTitle="404 Not Found">
   <section class="archive">
     <div class="section-content section-tag">
       <div class="archive-tag">
-        <div class="tag-header" style="margin: 20px">404 Not Found</div>
-        <div class="tag-post-list">来到了一片荒原，这里什么都没有。</div>
+        <div class="tag-header">
+          <input type="checkbox">
+          😅很抱歉，展览全部作品集的列表页没做，下次一定😅
+        </div>
+        <div class="tag-post-list">将鼠标移动到右上角&nbsp&nbsp&nbsp
+          <span class="tag-post-list-text">作品集👇</span>
+          &nbsp&nbsp有作品列表信息 </div>
       </div>
     </div>
   </section>
@@ -34,5 +40,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.tag-header{
+  margin: 20px 20px 30px 20px;
+}
+.archive-tag{
+  font-size: 20px;
+}
+.tag-post-list-text{
+  color: rgb(79, 124, 221);
 }
 </style>
