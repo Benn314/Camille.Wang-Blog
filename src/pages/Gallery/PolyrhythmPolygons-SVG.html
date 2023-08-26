@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+body {
+	background-color: orchid;
+	font-size: 1.5em;
+}
+
+#parentSVG {
+	background-color: #000;
+	filter: drop-shadow(10px 10px 12px black);
+	border-radius: 20px;
+}
+.centered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.controls {
+	position: absolute;
+	left: 50%;
+	top: 5%;
+	transform: translateX(-50%);
+}
+
+input[type="range"] {
+	-webkit-appearance: none;
+	border-radius: 4px;
+	border: 1px solid #d3d3d3;
+	height: 8px;
+	width: 7.6em;
+	margin-top: 20px;
+	filter: drop-shadow(2px 2px 2px black);
+}
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	height: max(25px, 1.2vw);
+	width: 15px;
+	border-radius: 2px;
+	background: purple;
+	cursor: ew-resize;
+	filter: drop-shadow(2px 2px 2px black);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+	transform: scale(1.7, 1);
+}
+
+circle:hover {
+	/*fill: yellow;*/
+	stroke-width: 2px;
+	filter: drop-shadow(2px 2px 4px grey) drop-shadow(-2px -2px 4px grey);
+}
+
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <label for="animationSpeed">Animation Speed</label><br>
+    <input type="range" id="animationSpeed" min="0.001" max="0.002" step="0.0001" value="0.001">
+  </div>
+  <script>
+    // TODO check that time tolerance or stop sounds if quicker animated to prevent overlapping play <=> triggerNext
+// rebuild with ONE requestAnimationFrame for all in a ParentClass? Ot evtl IIFE for creating
+// TODO pass numberOfRows/polys as argument on creation
+// The set tolerance is just an approximation and does not work for higher speed, same for volume-reduction
+// perhaps calculate them with animationProgress, but maybe overkill for this demonstaration-purpose. hmmm... or animate in a finegranulated setInterval for better control?
+
+const svgNS = "http://www.w3.org/2000/svg";
+
+const createSVGElement = (tagName, options) => {
+	const element = document.createElementNS(svgNS, tagName);
+	for (const [attribute, value] of Object.entries(options)) {
+		element.setAttribute(attribute, value);
+	}
+	return element;
+};
+
+const audioFiles = [...Array(12).keys()].map(
+	(index) =>
+		`https://assets.codepen.io/4970299/orbit_${"CDEFGAHcdefg".charAt(index)}.mp3`
+);
+
+class AnimatedPolygon {
+	#vertices;
+	#animationProgress;
+	#soundPlayed;
+	#soundMuted;
+
+	constructor(parentSVG, sides, radius, x, y, soundSrc) {
+		this.svg = parentSVG;
+		this.sides = sides;
+		this.radius = radius;
+		this.x = x;
+		this.y = y;
+
+		this.animationSpeed = this.sides * animationSpeed;
+
+		//  privates
+		this.#soundMuted = true;
+		this.#soundPlayed = false; // To not repeat if multiple frames in tolerance
+		this.#vertices = this.#calculateVertices();
+		this.#createPolygon();
+		this.#createCircle();
+		this.#createSound(soundSrc);
+		this.#createMuteButton();
+		this.#animationProgress = 0;
+		this.#animate();
+	}
+
+	#createPolygon() {
+		const points = this.#vertices.map(({ x, y }) => `${x},${y}`).join(" ");
+		this.polygon = this.svg.appendChild(
+			createSVGElement("polygon", {
+				points,
+				fill: "none",
+				stroke: "#fff",
+				"stroke-width": 2
+			})
+		);
+	}
+
+	#createCircle() {
+		this.circle = this.svg.appendChild(
+			createSVGElement("circle", { r: 6, fill: "orange", stroke: "#000" })
+		);
+	}
+
+	#calculateVertices() {
+		const vertices = [];
+		const angleIncrement = (2 * Math.PI) / this.sides;
+		const initialAngle = -Math.PI / 2; // start at "12 o'clock"
+		let side = 0;
+
+		while (side < this.sides) {
+			const angle = initialAngle + side * angleIncrement;
+			const x = this.x + this.radius * Math.cos(angle);
+			const y = this.y + this.radius * Math.sin(angle);
+			vertices.push({ x, y });
+			side++;
+		}
+		return vertices;
+	}
+
+	#createSound(soundSrc) {
+		this.audio = new Audio(soundSrc);
+		this.audio.volume = Math.max(0.15); // to not nerve with fast high sounds
+	}
+
+	#playSound() {
+		this.audio.currentTime = 0;
+		if (!this.soundMuted) this.audio.play();
+	}
+
+	#createMuteButton() {
+		const circle = this.svg.appendChild(
+			createSVGElement("circle", {
+				cx: this.x,
+				cy: this.y + this.radius + 15,
+				r: 6,
+				fill: "red",
+				cursor: "pointer",
+				stroke: "white"
+			})
+		);
+		circle.addEventListener("click", () => {
+			this.#soundMuted = !this.#soundMuted;
+			circle.setAttribute("fill", this.#soundMuted ? "red" : "limegreen");
+		});
+	}
+
+	#animate() {
+		// calcaulate pos on current line of polygon
+		const currentIndex = Math.floor(this.#animationProgress * this.sides);
+		const nextIndex = (currentIndex + 1) % this.sides;
+		const currentVertex = this.#vertices[currentIndex];
+		const nextVertex = this.#vertices[nextIndex];
+		const progressLine = this.#animationProgress * this.sides - currentIndex;
+
+		const interpolatedX =
+			currentVertex.x + (nextVertex.x - currentVertex.x) * progressLine;
+		const interpolatedY =
+			currentVertex.y + (nextVertex.y - currentVertex.y) * progressLine;
+
+		this.circle.setAttribute("cx", interpolatedX);
+		this.circle.setAttribute("cy", interpolatedY);
+
+		// adjust frequence-tolerance (pos NOT exact at request)
+		if (progressLine > 1 - 0.015 * this.sides) {
+			// play sound only ONCE inside tolerance timeFrame
+			if (!this.#soundPlayed && !this.#soundMuted) {
+				this.#playSound();
+				this.#soundPlayed = true;
+			}
+		} else {
+			this.#soundPlayed = false;
+		}
+		// set progress back to 0
+		this.#animationProgress = (this.#animationProgress + this.animationSpeed) % 1;
+		requestAnimationFrame(() => this.#animate());
+	}
+}
+
+let numberOfRows = 2,
+	polygonsPerRow = 3;
+
+function createPolygons(options = {}) {
+	const {
+		svg,
+		numberOfRows = 2,
+		polygonsPerRow = 3,
+		sides = 2,
+		radius = 50,
+		startX = 100,
+		startY = 100,
+		audioFiles
+	} = options;
+
+	const polygons = [];
+	const spacingX = radius * 2 + 10;
+	const spacingY = radius * 2 + 40;
+	let sidesNew = sides;
+
+	for (let row = 0; row < numberOfRows; row++) {
+		const y = startY + row * spacingY;
+
+		for (let col = 0; col < polygonsPerRow; col++) {
+			const x = startX + col * spacingX;
+			const polygon = new AnimatedPolygon(
+				svg,
+				sidesNew,
+				radius,
+				x,
+				y,
+				audioFiles[(sidesNew - 2) % audioFiles.length]
+			);
+			polygons.push(polygon);
+			sidesNew++;
+		}
+	}
+
+	return polygons;
+}
+
+// create the SVG Container
+const parentSVG = document.body.appendChild(
+	createSVGElement("svg", {
+		id: "parentSVG",
+		class: "centered",
+		width: `${polygonsPerRow * 142}`,
+		height: `${numberOfRows * 180}`
+	})
+);
+
+let animationSpeed = 0.001;
+
+const polys = createPolygons({ svg: parentSVG, audioFiles });
+
+// listen for and update animationSpeed
+const speedSlider = document.getElementById("animationSpeed");
+speedSlider.addEventListener("input", () => {
+	animationSpeed = +speedSlider.value;
+	polys.forEach((poly) => {
+		poly.animationSpeed = poly.sides * animationSpeed;
+	});
+});
+
+  </script>
+</body>
+</html>
