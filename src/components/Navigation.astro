@@ -10,6 +10,9 @@ import { SITE_TITLE } from "../consts";
         <a href="/" class="nav-title">{SITE_TITLE}</a>
         <div class="nav-menu">
           <div class="nav-item-wrapper">
+            <a href="/" class="nav-item-content">首页</a>
+          </div>
+          <div class="nav-item-wrapper">
             <a href="/archive" class="nav-item-content">目录</a>
           </div>
           <div class="nav-item-wrapper">
@@ -18,15 +21,21 @@ import { SITE_TITLE } from "../consts";
                 <button class="nav-item-content dropdown-toggle">作品集👇</button>
               </a>
               <ul class="dropdown-menu">
-                <li><a href="/Gallery/Aurora">极光</a></li>
-                <li><a href="/Gallery/magic-card">百变小茵</a></li>
+                <li style="margin-top: 30px;"><a href="/Gallery/Aurora">极光</a></li>
+                <li><a href="/Gallery/magic-card" style="">百变小茵</a></li>
                 <li><a href="/Gallery/rain">下雨特效</a></li>
                 <li><a href="/Gallery/transitivebullsh">烟花特效</a></li>
-                <li><a href="/Gallery/Fake-perspective-steps">伪透视步骤</a></li>
+                <li><a href="/Gallery/Fake-perspective-steps">伪透视阶梯</a></li>
+                <li><a href="/Gallery/3D-perspective-game-cards">3D透视卡片</a></li>
                 <li><a href="/Gallery/Neon-Toggle-Switch">霓虹灯开关</a></li>
-                <li><a href="/Gallery/Breathe">霓虹灯开关</a></li>
+                <li><a href="/Gallery/Toothed-Toggle">齿形开关</a></li>
+                <li><a href="/Gallery/Breathe">呼吸</a></li>
                 <li><a href="/Gallery/Multi-input-Maze">迷宫</a></li>
                 <li><a href="/Gallery/PolyrhythmPolygons-SVG">可调速多边形</a></li>
+                <li><a href="/Gallery/Donut-particle">甜甜圈粒子</a></li>
+                <li><a href="/Gallery/Atom">原子内部结构</a></li>
+                <li><a href="/Gallery/little-bear">小熊光线</a></li>
+                <li><a href="/Gallery/Broken-Line-Minimalist-Clock">“断线”极简时钟</a></li>
               </ul>
             </div>
           </div>
@@ -79,7 +88,8 @@ document.addEventListener("DOMContentLoaded", function () {
 .dropdown-menu {
   position: absolute;
   top: 100%;
-  left: 0;
+  left: -46px;
+  width: 150px;
   display: none;
   list-style: none;
   padding: 0;
@@ -93,17 +103,42 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 
 .dropdown-menu li {
-  padding: 8px 15px;
+  padding: 3px 15px;
+  text-align: center;
 }
 
 .dropdown-menu li a {
   text-decoration: none;
-  color: #333;
+  color: #676b5f;
   display: block;
+  position: relative; /* 添加相对定位 */
+  overflow: hidden; /* 隐藏溢出部分 */
 }
 
 .dropdown-menu li a:hover {
   background-color: #f0f0f0;
+  color: #676b5f;
+}
+
+.dropdown-menu li a::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  background-color: #6a00ff;
+  border-radius: 50%;
+  opacity: 0;
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  pointer-events: none; /* 防止伪元素影响链接的交互 */
+}
+
+.dropdown-menu li a:hover::before {
+  width: 100%; 
+  height: 100%; 
+  opacity: 0.3;
 }
 
 </style>

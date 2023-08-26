@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /**
+ * Mixin: Center element
+ */
+/**
+ * Layout styles
+ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  font-size: 16px;
+  background-color: #000000;
+  background: radial-gradient(#535353, #000000);
+}
+
+@media only screen and (min-width: 48rem) {
+  html {
+    font-size: 22px;
+  }
+}
+
+@media only screen and (min-width: 80rem) {
+  html {
+    font-size: 28px;
+  }
+}
+
+/**
+ * Clock styles
+ */
+.clock {
+  width: 15rem;
+  height: 15rem;
+  margin: -7.5rem 0 0 -7.5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-box-reflect: below -35px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(white));
+}
+
+@media only screen and (min-width: 48rem) {
+  .clock {
+    -webkit-box-reflect: below -45px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(white));
+  }
+}
+
+@media only screen and (min-width: 80rem) {
+  .clock {
+    -webkit-box-reflect: below -55px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(white));
+  }
+}
+
+.clock .hour-bg,
+.clock .min-bg,
+.clock .sec-bg {
+  border: 0.65rem solid #272726;
+  background-color: #272726;
+  box-shadow: inset 0 6px 10px rgba(0, 0, 0, 0.5);
+}
+
+.clock .min-bg,
+.clock .hour-bg {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5), inset 0 6px 10px rgba(0, 0, 0, 0.5);
+}
+
+.clock .sec-bg {
+  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.2), inset 0 6px 10px rgba(0, 0, 0, 0.5);
+}
+
+.clock .hand {
+  border: 0.65rem solid transparent;
+  background-color: transparent;
+  transition: all .5s ease;
+}
+
+.clock .hand:after {
+  display: block;
+  content: '';
+  width: 0.15rem;
+  height: 1.5rem;
+  margin: 0;
+  position: absolute;
+  background-color: #F7C393;
+  top: 0;
+  left: 50%;
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.25);
+}
+
+.clock:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 50%;
+  bottom: 15px;
+  margin-left: -125px;
+  border-radius: 150px;
+  height: 100px;
+  width: 250px;
+  transform: scaleY(0.19);
+  box-shadow: 0px 250px 20px -15px rgba(0, 0, 0, 0.05), 0px 250px 20px -55px rgba(255, 255, 255, 0.05);
+}
+
+/**
+ * Clock hand centering
+ */
+.seconds,
+.sec-bg {
+  width: 13rem;
+  height: 13rem;
+  margin: -6.5rem 0 0 -6.5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 13rem;
+}
+
+.minutes,
+.min-bg {
+  width: 9rem;
+  height: 9rem;
+  margin: -4.5rem 0 0 -4.5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 9rem;
+}
+
+.hour,
+.hour-bg {
+  width: 4.5rem;
+  height: 4.5rem;
+  margin: -2.25rem 0 0 -2.25rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 4.5rem;
+}
+
+  </style>
+</head>
+<body>
+  <!-- Clock -->
+<div class="clock">
+
+  <!-- Seconds -->
+  <div class="sec-bg">
+    <div class="hand seconds"></div>
+  </div>
+  
+  <!-- Minutes -->
+  <div class="min-bg">
+    <div class="hand minutes"></div>
+  </div>
+  
+  <!-- Hours -->
+  <div class="hour-bg">
+    <div class="hand hour"></div>
+  </div>
+</div>
+<script>
+  /**
+ * "Broken Line" Minimalist Clock
+ * Based on Lukas Avenas "Broken Line"
+ * https://www.behance.net/gallery/28569407/broken-line
+ * @author Mike King (@micjamking) 
+ */
+(function(){
+  'use strict';
+  
+  /** 
+   * Creates a new clock
+   * @constructor
+   */
+  function Clock(){
+    
+    /** 
+     * Length of an hour in degrees
+     * @constant {number} HOUR_DEG 360 degrees / 12 hours
+     */
+    this.HOUR_DEG = 30;
+    
+    /** 
+     * Length of a minute & second in degrees
+     * @constant {number} MIN_SEC_DEG 360 degrees / 60 (minutes || seconds)
+     */
+    this.MIN_SEC_DEG = 6;
+    
+    /** 
+     * The current date
+     * @type {date}
+     */
+    this.date;
+    
+    /** 
+     * The iteration counter
+     * Keep looping instead of rewinding
+     * when transitioning from 360deg to 0deg
+     * @type {Object}
+     */
+    this.iteration = {
+      sec: 0,
+      min: 0,
+      hour: 0
+    };
+    
+    /** 
+     * Reference to the hour hand
+     * @type {HTMLElement}
+     */
+    this.hour = document.querySelector('.hour');
+    
+    /** 
+     * Reference to the minute hand
+     * @type {HTMLElement}
+     */
+    this.min = document.querySelector('.minutes');
+    
+    
+    /** 
+     * Reference to the second hand
+     * @type {HTMLElement}
+     */
+    this.sec = document.querySelector('.seconds');
+  }
+  
+  /**
+   * Get hour and set degree of rotation
+   * @memberof Clock
+   */
+  Clock.prototype.getHour = function(){
+    /** Use 12-hour clock (if PM, minus 12) */
+    var hour = this.date.getHours();
+    hour = (hour > 12) ? hour - 12 : hour;
+    
+    /** Set current hour in degrees */
+    var degree = 'rotate(' + ((this.HOUR_DEG * (this.date.getMinutes() / 60)) + (this.HOUR_DEG * hour) + (this.iteration.hour * 360)) + 'deg)';
+    
+    /** Apply the degree */
+    if (this.hour){
+      if (hour === 12 && this.date.getMinutes() === 59){
+        ++this.iteration.hour;
+      }
+      
+      this.hour.style.webkitTransform = degree;
+      this.hour.style.transform       = degree;
+    }
+  };
+  
+  /**
+   * Get minute and set degree of rotation
+   */
+  Clock.prototype.getMinutes = function(){
+    /** Set current minute in degrees */
+    var degree = 'rotate(' + (this.MIN_SEC_DEG * this.date.getMinutes() + (this.iteration.min  * 360)) + 'deg)';
+    
+    /** Apply the degree */
+    if (this.min){
+      if (this.date.getMinutes() === 59 && 
+          this.date.getSeconds() === 59){
+        ++this.iteration.min;
+      }
+      
+      this.min.style.webkitTransform = degree;
+      this.min.style.transform       = degree;
+    }
+  };
+  
+  /**
+   * Get seconds and set degree of rotation
+   */
+  Clock.prototype.getSeconds = function(){
+    /** Set current seconds in degrees */
+    var degree = 'rotate(' + (this.MIN_SEC_DEG * this.date.getSeconds() + (this.iteration.sec  * 360)) + 'deg)';
+    
+    /** Apply the degree */
+    if (this.sec){
+      if (this.date.getSeconds() === 59){
+        ++this.iteration.sec;
+      }
+
+      this.sec.style.webkitTransform = degree;
+      this.sec.style.transform       = degree;
+    }
+  };
+  
+  /**
+   * Clock initialization
+   */
+  Clock.prototype.init = function(){
+    /** Fire clock functions once per sec */
+    setInterval((function(){
+    	this.date = new Date();
+      this.getHour();
+      this.getMinutes();
+      this.getSeconds();
+    }).bind(this), 1000);
+  };
+   
+  /**
+   * Can I kick it?...
+   * @constructs Clock
+   */
+  var clock = new Clock();
+  
+  /** ...YES YOU CAN! */
+  clock.init();
+})();
+</script>
+</body>
+</html>
