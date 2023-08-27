@@ -13,23 +13,29 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   </section>
 </BaseLayout> -->
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <!-- ... -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
   <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/waline/2.15.6/waline.css"
-  />
-  <!-- ... -->
+  rel="stylesheet"
+  href="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/waline.css"
+/>
 </head>
 <body>
-  <!-- ... -->
-  <div id="waline"></div>
-  <script type="module">
-    import { init } from 'https://cdnjs.cloudflare.com/ajax/libs/waline/2.15.6/waline.js';
-
-    init({
-      el: '#waline',
-      serverURL: 'https://camille-waline-comment.vercel.app',
-    });
-  </script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/waline/2.15.1/comment.js"></script>
+    <div id="Comments"></div>
+    <script>
+      Artalk.init({
+        el:        '#Comments',              // 绑定元素的 Selector
+        pageKey:   '',                // 固定链接 (留空自动获取)
+        pageTitle: '', // 页面标题 (留空自动获取)
+        server:    'https://camille.plus:8080',  // 后端地址
+        site:      'Artalk 的博客',           // 你的站点名
+      })
+    </script>
 </body>
+</html>
