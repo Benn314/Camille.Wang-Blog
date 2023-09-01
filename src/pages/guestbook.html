@@ -1,32 +1,105 @@
-<!-- ---
-import BaseLayout from "../layouts/BaseLayout.astro";
----
-
-<BaseLayout primaryTitle="404 Not Found">
-  <section class="archive">
-    <div class="section-content section-tag">
-      <div class="archive-tag">
-        <div class="tag-header" style="margin: 20px">404 Not Found</div>
-        <div class="tag-post-list">来到了一片荒原，这里什么都没有。</div>
-      </div>
-    </div>
-  </section>
-</BaseLayout> -->
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link
-  rel="stylesheet"
-  href="https://unpkg.com/@waline/client@v2/dist/waline.css"
-/>
+    rel="stylesheet"
+    href="https://unpkg.com/@waline/client@v2/dist/waline.css"
+  />
+  <style>
+    /* 基本样式 */
+    .navbar {
+      background-color: #fff; /* 白色背景 */
+      border-radius: 20px; /* 四周圆角 */
+      text-align: center; /* 文本居中 */
+      padding: 10px 0; /* 上下内边距 */
+      height: 40px; /* 设置高度为40px */
+      width: 500px; /* 宽度为330px */
+      margin: 0 auto; /* 水平居中 */
+      margin-top: 40px;
+      margin-bottom: 40px;
+      overflow: hidden; /* 防止内容溢出 */
+      display: flex; /* 使用 Flex 布局 */
+      align-items: center; /* 垂直居中内容 */
+      justify-content: center; /* 水平居中内容 */
+    }
+
+    /* 去除列表项的默认样式 */
+    .navbar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    /* 导航链接样式 */
+    .navbar ul li {
+      display: inline-block; /* 横向排列 */
+      margin-right: 20px; /* 右侧间距 */
+    }
+
+    .navbar ul li:last-child {
+      margin-right: 0; /* 最后一个链接去除右侧间距 */
+    }
+
+    .navbar ul li a {
+      text-decoration: none; /* 去除链接下划线 */
+      color: #333; /* 链接文本颜色 */
+      font-weight: bold; /* 加粗字体 */
+      font-size: 16px; /* 字体大小 */
+      padding: 8px 16px; /* 链接内边距 */
+      border-radius: 10px; /* 圆角 */
+      transition: background-color 0.3s; /* 背景色变化过渡 */
+    }
+
+    /* 链接悬停效果 */
+    .navbar ul li a:hover {
+      background-color: #ddd; /* 悬停时的背景色 */
+    }
+
+    .wrap-in{
+      max-width: 800px;
+      text-align: left;
+      margin: auto;
+      padding-left: 18px;
+      padding-bottom: 20px;
+    }
+    body {
+      /* 设置背景颜色 */
+      background-color: #f0f0f0;
+
+      /* 使用线性渐变创建网格线 */
+      background-image:
+        linear-gradient(0deg, transparent 24px, rgba(0, 0, 0, 0.1) 24px, rgba(0, 0, 0, 0.1) 25px, transparent 25px),
+        linear-gradient(90deg, transparent 24px, rgba(0, 0, 0, 0.1) 24px, rgba(0, 0, 0, 0.1) 25px, transparent 25px);
+      background-size: 25px 25px; /* 控制每个格子的大小 */
+    }
+    .title{
+      display: block;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-  <div id="waline" style="max-width: 800px; margin: 0 auto;"></div>
+    <div class="navbar">
+      <ul>
+        <li><a href="#">首页</a></li>
+        <li><a href="#">目录</a></li>
+        <li><a href="#">留言板</a></li>
+        <li><a href="#">作品集</a></li>
+        <li><a href="#">关于我</a></li>
+      </ul>
+    </div>
+    <div class="wrap-in">
+      <h1 class="title">欢迎来到我的留言墙</h1>
+      <p class="desc">
+        <span class="text">在这里，你可以留下你想对我说的话，或是你的建议，或是你的想法，或是你的批评，或是你的赞美，或是你的鼓励，或是你的吐槽。</span>
+      </p>
+    </div>
+    <!-- 网格背景动画 -->
+    <script type="text/javascript" color="122,122,122" opacity='1' zIndex="-2" count="150" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+    <!-- 樱花动画 -->
+    <!-- <script src="https://cdn.jsdelivr.net/gh/yremp/yremp-js@1.5/sakura.js"></script> -->
+    <div id="waline" style="max-width: 800px; margin: 0 auto;"></div>
   <script type="module">
     import { init } from 'https://unpkg.com/@waline/client@v2/dist/waline.mjs';
 
@@ -36,4 +109,3 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     });
   </script>
 </body>
-</html>
