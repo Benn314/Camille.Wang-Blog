@@ -174,4 +174,8 @@ export default defineConfig({
     syntaxHighlight: 'prism',
   },
   integrations: [sitemap()],
+  experiments: {
+    // 启用CSS支持
+    css: true,
+  },
 });
