@@ -4,6 +4,9 @@ import Null from "../layouts/Null.astro";
 
 <Null primaryTitle="关于">
   <section class="archive">
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
 <!-- Canvas -->
 <canvas class="orb-canvas"></canvas>
 <!-- Overlay -->
@@ -44,7 +47,18 @@ import Null from "../layouts/Null.astro";
   </div>
 </div>
 <script>
-  import * as PIXI from "https://cdn.skypack.dev/pixi.js@5.x";
+  window.addEventListener("load", function () {
+    // 隐藏加载动画
+    var loader = document.querySelector(".loader-container");
+    loader.style.display = "none";
+
+    // 显示页面内容
+    var pageContent = document.querySelector(".orb-canvas");
+    pageContent.style.display = "block";
+});
+</script>
+<script>
+import * as PIXI from "https://cdn.skypack.dev/pixi.js@5.x";
 import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-blur@3.2.0";
 import SimplexNoise from "https://cdn.skypack.dev/simplex-noise@3.0.0";
 import hsl from "https://cdn.skypack.dev/hsl-to-hex";
@@ -277,6 +291,40 @@ document
   </section>
 
 <style>
+  
+/* 全屏加载动画容器样式 */
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* 半透明背景色 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* 确保加载动画在最前面 */
+}
+
+/* 加载动画的样式，可以根据需求自定义 */
+.loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite, fadeOut 1s ease-in-out 3s forwards;
+}
+/* 加载动画退出动画 */
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
+/* 页面内容容器样式 */
+.orb-canvas {
+    display: none; /* 初始状态下隐藏页面内容 */
+}
+
 :root {
   --dark-color: hsl(var(--hue), 100%, 9%);
   --light-color: hsl(var(--hue), 95%, 98%);
