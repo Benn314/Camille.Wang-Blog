@@ -7383,7 +7383,10 @@ ul>li, ol>li {
 }
 
 code {
-  margin: 0px 0.25em;
+  padding: 0px 0.25em;
+  background-color: #dfdae7;
+  border-radius: 20px;
+  font-weight:600;
 }
 
 blockquote {

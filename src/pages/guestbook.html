@@ -23,6 +23,17 @@
       display: flex; /* 使用 Flex 布局 */
       align-items: center; /* 垂直居中内容 */
       justify-content: center; /* 水平居中内容 */
+
+      /* 添加过渡效果 */
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      transform: translateY(-100%); /* 初始状态在屏幕上方 */
+      opacity: 0; /* 初始状态透明 */
+    }
+
+    /* 激活导航栏的动画效果 */
+    .navbar.active {
+        transform: translateY(0); /* 平移到屏幕顶部 */
+        opacity: 1; /* 渐变显示 */
     }
 
     /* 去除列表项的默认样式 */
@@ -62,7 +73,19 @@
       margin: auto;
       padding-left: 18px;
       padding-bottom: 20px;
+
+      /* 添加过渡效果 */
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      transform: translateY(-100%); /* 初始状态在屏幕上方 */
+      opacity: 0; /* 初始状态透明 */
     }
+
+    /* 激活导航栏的动画效果 */
+    .wrap-in.active {
+        transform: translateY(0); /* 平移到屏幕顶部 */
+        opacity: 1; /* 渐变显示 */
+    }
+
     body {
       /* 设置背景颜色 */
       background-color: #f0f0f0;
@@ -106,6 +129,15 @@
     init({
       el: '#waline',
       serverURL: 'https://camille-waline-comment.vercel.app',
+    });
+
+    // 在页面加载完成后激活导航栏的动画效果
+    window.addEventListener("load", function () {
+        var navbar = document.querySelector(".navbar");
+        navbar.classList.add("active");
+
+        var wrapIn = document.querySelector(".wrap-in");
+        wrapIn.classList.add("active");
     });
   </script>
 </body>
