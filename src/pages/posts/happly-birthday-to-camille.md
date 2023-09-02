@@ -36,11 +36,6 @@ featured: true
    Your browser does not support the video tag.
 </video>
 
-<video width="652" height="600" controls loop>
-   <source src="http://s0cl35n5m.hn-bkt.clouddn.com/videoknight.mp4" type="video/mp4">
-   Your browser does not support the video tag.
-</video>
-
 ​	
 
 鲜衣怒马少年时，
