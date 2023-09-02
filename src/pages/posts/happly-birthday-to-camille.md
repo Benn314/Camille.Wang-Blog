@@ -5,8 +5,8 @@ pubDate: 2023-09-02
 description: '以梦为马，不负韶华'
 author: 'Ben'
 cover:
-    url: './public/static/img/knight-long.png'
-    square: './public/static/img/knight.jpg'
+    url: 'https://pic.imgdb.cn/item/64f2b263661c6c8e54a7661f.png'
+    square: 'https://pic.imgdb.cn/item/64f2b22a661c6c8e54a74ea5.jpg'
     alt: 'cover'
 tags: ["生日祝福","开心","充满活力","勇敢","冒险"]
 theme: 'light'
@@ -32,7 +32,7 @@ featured: true
 请看下面 VCR：
 
 <video width="652" height="600" controls loop>
-   <source src="../../../public/static/img/knight.mp4" type="video/mp4">
+   <source src="https://vimeo.com/manage/videos/860406231" type="video/mp4">
    Your browser does not support the video tag.
 </video>
 
