@@ -173,9 +173,5 @@ export default defineConfig({
     rehypePlugins: pipeline(),
     syntaxHighlight: 'prism',
   },
-  integrations: [sitemap()],
-  experiments: {
-    // 启用CSS支持
-    css: true,
-  },
+  integrations: [sitemap()]
 });

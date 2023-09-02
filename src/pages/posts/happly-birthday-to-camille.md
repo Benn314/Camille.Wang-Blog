@@ -32,9 +32,10 @@ featured: true
 请看下面 VCR：
 
 <video width="652" height="600" controls loop>
-   <source src="http://s0cl35n5m.hn-bkt.clouddn.com/videoknight.mp4?e=1693640776&token=gQm2Lb97J1vm47ZVOAz7FlV694qG8Xlgvq5gddrW:HVZ2j5CCgKBzbyvyK1bL6yIRNPs=" type="video/mp4">
+   <source src="https://ben-oss-1311050996.cos.ap-guangzhou.myqcloud.com/knight.mp4" type="video/mp4">
    Your browser does not support the video tag.
 </video>
+
 
 ​	
 
