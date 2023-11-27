@@ -3,7 +3,7 @@ layout: '../../layouts/MarkdownPost.astro'
 title: '全球话语权 先入为主'
 pubDate: 2023-11-27
 description: ''
-author: 'Camille'
+author: '王凯茵'
 cover:
     url: 'https://pic.imgdb.cn/item/6564a709c458853aef044e52.png'
     square: 'https://pic.imgdb.cn/item/6564a709c458853aef044e52.png'
